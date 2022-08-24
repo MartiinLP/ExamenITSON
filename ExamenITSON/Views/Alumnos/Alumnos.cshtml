@@ -1,0 +1,226 @@
+﻿
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<link type="text/css" href="~/css/lite-style-1.min.css" rel="stylesheet" />
+
+<div class="dt-card dt-card__full-height">
+    <div class="dt-card__header" style="justify-self">
+        <h4 class="mb--15">Lista de Alumnos</h4>
+        <h1 class="display-4">Martín Alberto Lapizco Ruiz</h1>
+        <div>
+            <button class="btn btn-success" data-toggle="modal" data-target="#Add">Agregar alumno</button>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <table class="table" id="table3">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido Paterno</th>
+                    <th scope="col">Apellido Materno</th>
+                    <th scope="col">Esta Activo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var alu in ViewBag.Alumnos)
+                {
+                    <tr>
+                        <td>@alu.Nombres</td>
+                        <td>@alu.ApellidoPaterno</td>
+                        <td>@alu.ApellidoMaterno</td>
+                        @if (alu.EstaActivo == true)
+                        {
+                            <td>Si</td>
+                        }
+                        else
+                        {
+                            <td>No</td>
+                        }
+                        <td>
+                            <button class="btn btn-warning" onclick="DetailsAlumno(@alu.Id, 'Editar')">Editar</button>
+                            <button class="btn btn-danger" onclick="RemoveAlumno(@alu.Id)">Eliminar</button>
+                            <button class="btn btn-primary" onclick="DetailsAlumno(@alu.Id, 'Detalle')">Detalles</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@*Create Alumno Modal*@
+<div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="max-width:45em;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar alumno</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="CreateAlumnoForm">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="NombreC" id="NombreC" maxlength="50" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Apellido Paterno</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="ApellidoPC" id="ApellidoPC" maxlength="50" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Apellido Materno</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="ApellidoMC" id="ApellidoMC" maxlength="50" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Esta Activo</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="EstaActivoC" name="EstaActivoC">
+                                <option value="true">Si</option>
+                                <option value="false">No</option>
+                            </select>                           
+                        </div>
+                    </div>
+
+                    <div class="form-group float-right">
+                        <button type="button" id="btnCreateAlumno" onclick="CreateAlumno()" class="btn btn-success">Guardar</button>
+                        <button data-dismiss="modal" class="btn btn-danger">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Update Alumno Modal*@
+<div class="modal fade" id="Update" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="max-width:45em;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar alumno</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form id="UpdateAlumnoForm">
+                    <input type="hidden" />
+                    <input type="hidden" id="Id" name="Id" />
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="NombreU" name="NombreU" maxlength="50" required autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Apellido Paterno</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="ApellidoPU" name="ApellidoPU" maxlength="50" required autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Apellido Materno</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="ApellidoMU" name="ApellidoMU" maxlength="50" required autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Esta Activo</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="EstaActivoU" name="EstaActivoU">
+                                <option value="true">Si</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group float-right">
+                        <button type="button" id="btnUpdateAlumno" onclick="UpdateAlumno()" class="btn btn-success">Guardar</button>
+                        <button data-dismiss="modal" class="btn btn-danger">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Details Alumno Modal*@
+<div class="modal fade" id="Detalles" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="max-width:45em;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalles alumno</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form id="DetallesAlumnoForm">
+                    <input type="hidden" />
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="NombreD" name="NombreD" maxlength="50" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Apellido Paterno</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="ApellidoPD" name="ApellidoPD" maxlength="50" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Apellido Materno</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="ApellidoMD" name="ApellidoMD" max="150" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Esta activo</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="EstaActivoD" name="EstaActivoD" disabled>
+                                <option value="true">Si</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group float-right">
+                        <button data-dismiss="modal" class="btn btn-danger">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script>
+
+<script src="~/js/Alumnos/Alumnos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

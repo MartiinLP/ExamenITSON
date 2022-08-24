@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamenITSON", "ExamenITSON\ExamenITSON.csproj", "{EDC83F3B-B22E-4E61-8BED-2AAD8011D7FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDC83F3B-B22E-4E61-8BED-2AAD8011D7FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDC83F3B-B22E-4E61-8BED-2AAD8011D7FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDC83F3B-B22E-4E61-8BED-2AAD8011D7FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDC83F3B-B22E-4E61-8BED-2AAD8011D7FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EBCF524B-C1A1-4A9D-9B64-821BEB1317AA}
+	EndGlobalSection
+EndGlobal
